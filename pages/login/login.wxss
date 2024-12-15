@@ -1,0 +1,55 @@
+@import "/styles/common.wxss";
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: var(--background-color);
+}
+
+.logo {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--primary-color);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo-text {
+  font-size: 48px;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 48px;
+}
+
+.login-box {
+  width: 100%;
+  padding: 0 32px;
+}
+
+.login-btn {
+  width: 100% !important;
+  background: var(--primary-color) !important;
+  color: #FFFFFF !important;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 12px 0;
+}
+
+.login-btn::after {
+  border: none;
+}

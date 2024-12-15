@@ -1,0 +1,119 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 头部区域 -->
+  <view class="header">
+    <view class="period-selector">
+      <view class="selector-group">
+        <!-- 周期类型选择 -->
+        <picker mode="selector" range="{{periodTypes}}" value="{{periodTypeIndex}}" bindchange="handleTypeChange">
+          <view class="type-text">
+            <text>{{periodTypes[periodTypeIndex]}}</text>
+            <text class="icon">▼</text>
+          </view>
+        </picker>
+
+        <!-- 时间选择 -->
+        <view class="month-nav">
+          <text class="nav-btn" bindtap="prevMonth">◀</text>
+          <picker wx:if="{{periodTypeIndex === 0}}"
+                  mode="date" 
+                  fields="month" 
+                  value="{{currentPeriod}}" 
+                  bindchange="handlePeriodChange">
+            <view class="period-text">
+              <text>{{periodRange}}</text>
+              <text class="icon">▼</text>
+            </view>
+          </picker>
+          <picker wx:else
+                  mode="date" 
+                  fields="day" 
+                  value="{{currentDate}}" 
+                  bindchange="handlePeriodChange">
+            <view class="period-text">
+              <text>{{periodRange}}</text>
+              <text class="icon">▼</text>
+            </view>
+          </picker>
+          <text class="nav-btn" bindtap="nextMonth">▶</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 统计信息 -->
+  <view class="stats-panel">
+    <view class="stats-title">{{periodRange}} 工作进度</view>
+    <view class="stats-grid">
+      <view class="stat-box">
+        <text class="stat-label">总任务</text>
+        <text class="stat-value">{{statistics.total}}</text>
+      </view>
+      <view class="stat-box">
+        <text class="stat-label">已完成</text>
+        <text class="stat-value completed">{{statistics.completed}}</text>
+      </view>
+      <view class="stat-box">
+        <text class="stat-label">进行中</text>
+        <text class="stat-value pending">{{statistics.pending}}</text>
+      </view>
+      <view class="stat-box">
+        <text class="stat-label">已延期</text>
+        <text class="stat-value delayed">{{statistics.delayed}}</text>
+      </view>
+    </view>
+    <view class="progress-bar">
+      <view class="progress" style="width: {{statistics.completionRate}}">
+        <text class="progress-text">{{statistics.completionRate}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 工作项列表 -->
+  <scroll-view scroll-y class="work-list" wx:if="{{plans.length > 0 && plans[0].items.length > 0}}">
+    <view class="list-header">
+      <text class="list-title">{{periodRange}} 工作计划</text>
+    </view>
+    <view class="work-items">
+      <view class="work-item" wx:for="{{plans[0].items}}" wx:key="id">
+        <view class="item-main">
+          <text class="item-index">{{index + 1}}.</text>
+          <text class="item-content">{{item.content}}</text>
+          <text class="tag tag-{{item.status}}">{{statusMap[item.status]}}</text>
+        </view>
+        <view class="item-info">
+          <text class="info-date">计划时间：{{util.formatDateRange(item.start_date, item.due_date)}}</text>
+          <block wx:if="{{item.status === 'completed'}}">
+            <text class="info-text">完成情况：{{item.evaluation}}</text>
+          </block>
+          <block wx:if="{{item.status === 'delayed'}}">
+            <text class="info-text delay">延期原因：{{item.delay_reason}}</text>
+          </block>
+        </view>
+        <view class="item-actions">
+          <button class="btn-edit" bindtap="handleEditWork" data-work="{{item}}">
+            <text class="icon-edit">✎</text>
+          </button>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <text class="empty-text">还没有工作计划，立即添加吧</text>
+  </view>
+
+  <!-- 底部操作区 -->
+  <view class="footer">
+    <view class="action-group">
+      <view class="action-buttons">
+        <button class="btn btn-secondary" bindtap="goToHistory">历史计划</button>
+        <button class="btn btn-secondary" bindtap="goToEvaluate">计划评估</button>
+      </view>
+      <view class="action-buttons">
+        <button class="btn" bindtap="goToAdd">新增计划</button>
+      </view>
+    </view>
+  </view>
+</view>

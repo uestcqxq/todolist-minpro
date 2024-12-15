@@ -1,0 +1,54 @@
+<!--pages/history/history.wxml-->
+<view class="container">
+  <!-- 历史计划列表 -->
+  <scroll-view scroll-y class="history-list" bindscrolltolower="loadMore">
+    <view class="history-item card" wx:for="{{plans}}" wx:key="id" bindtap="showDetail" data-id="{{item.id}}">
+      <view class="item-header">
+        <view class="period">{{item.period}} {{item.type === 'month' ? '月' : '周'}}</view>
+        <view class="stats">
+          <text class="stat-item">总计 {{item.item_count}}</text>
+          <text class="stat-item completed">完成 {{item.completed_count}}</text>
+        </view>
+      </view>
+      
+      <view class="progress-bar">
+        <view class="progress" style="width: {{item.completed_count / item.item_count * 100}}%"></view>
+      </view>
+    </view>
+
+    <!-- 加载更多 -->
+    <view class="loading" wx:if="{{loading}}">加载中...</view>
+    <view class="no-more" wx:if="{{!hasMore}}">没有更多了</view>
+  </scroll-view>
+
+  <!-- 详情弹窗 -->
+  <view class="detail-modal {{showDetail ? 'show' : ''}}" bindtap="hideDetail">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="title">{{currentPlan.period}} 工作计划</text>
+        <text class="close" bindtap="hideDetail">×</text>
+      </view>
+
+      <scroll-view scroll-y class="modal-body">
+        <view class="work-item" wx:for="{{currentPlan.items}}" wx:key="id">
+          <view class="work-content">
+            <text class="content">{{item.content}}</text>
+            <text class="tag tag-{{item.status}}">{{statusMap[item.status]}}</text>
+          </view>
+
+          <block wx:if="{{item.status !== 'pending'}}">
+            <view class="evaluation-info" wx:if="{{item.evaluation}}">
+              <text class="label">评估记录：</text>
+              <text class="text">{{item.evaluation}}</text>
+            </view>
+            
+            <view class="evaluation-info" wx:if="{{item.delay_reason}}">
+              <text class="label">延期原因：</text>
+              <text class="text">{{item.delay_reason}}</text>
+            </view>
+          </block>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

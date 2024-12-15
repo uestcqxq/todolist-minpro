@@ -1,0 +1,15 @@
+<view class="container">
+  <view class="logo">
+    <text class="logo-text">工作</text>
+  </view>
+  <view class="title">工作计划小程序</view>
+  <view class="login-box">
+    <button 
+      class="login-btn" 
+      type="primary" 
+      open-type="getUserInfo" 
+      bindgetuserinfo="handleLogin"
+      loading="{{loading}}"
+    >微信一键登录</button>
+  </view>
+</view> 

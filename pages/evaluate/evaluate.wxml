@@ -1,0 +1,60 @@
+<!--pages/evaluate/evaluate.wxml-->
+<view class="container">
+  <!-- 头部统计信息 -->
+  <view class="header">
+    <view class="period">{{lastPeriod}} 工作评估</view>
+    <view class="stats">
+      <view class="stat-item">
+        <text class="label">总任务</text>
+        <text class="value">{{stats.total}}</text>
+      </view>
+      <view class="stat-item">
+        <text class="label">已完成</text>
+        <text class="value completed">{{stats.completed}}</text>
+      </view>
+      <view class="stat-item">
+        <text class="label">已延期</text>
+        <text class="value delayed">{{stats.delayed}}</text>
+      </view>
+      <view class="stat-item">
+        <text class="label">进行中</text>
+        <text class="value pending">{{stats.pending}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 工作项列表 -->
+  <view class="content">
+    <view class="work-items">
+      <view class="work-item" wx:for="{{plan.items}}" wx:key="id">
+        <view class="work-content">
+          <text class="content">{{item.content}}</text>
+          <view class="status-selector">
+            <picker bindchange="handleStatusChange" data-id="{{item.id}}" range="{{statusOptions}}" range-key="label">
+              <text class="tag tag-{{item.status}}">{{statusMap[item.status]}}</text>
+            </picker>
+          </view>
+        </view>
+        <!-- 评估记录 -->
+        <view class="evaluation">
+          <block wx:if="{{item.status === 'completed'}}">
+            <input placeholder="请输入完成情况评价" value="{{item.evaluation}}" 
+                   bindinput="handleEvaluationInput" data-id="{{item.id}}"/>
+          </block>
+          <block wx:if="{{item.status === 'delayed'}}">
+            <input placeholder="请输入延期原因" value="{{item.delay_reason}}"
+                   bindinput="handleDelayReasonInput" data-id="{{item.id}}"/>
+            <button class="btn-transfer" bindtap="handleTransfer" data-item="{{item}}">
+              转入下期
+            </button>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作区 -->
+  <view class="footer">
+    <button class="btn" bindtap="handleSubmit">提交评估</button>
+  </view>
+</view>

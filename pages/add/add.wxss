@@ -1,0 +1,104 @@
+/* pages/add/add.wxss */
+@import "/styles/common.wxss";
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background-color);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.section {
+  background: var(--card-background);
+  margin: 12px;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.section-title {
+  font-size: 14px;
+  color: var(--secondary-text);
+  margin-bottom: 12px;
+}
+
+.period-selector {
+  display: flex;
+  gap: 16px;
+}
+
+.picker-item {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--background-color);
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon {
+  font-size: 12px;
+  color: var(--secondary-text);
+}
+
+.work-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.work-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.work-input {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--background-color);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.delete-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--danger-color);
+}
+
+.icon-delete {
+  font-size: 24px;
+}
+
+.btn-add {
+  margin-top: 16px;
+  background: none;
+  border: 1px dashed var(--primary-color);
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.icon-add {
+  font-size: 16px;
+}
+
+.footer {
+  margin-top: auto;
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+}
+
+.footer .btn {
+  flex: 1;
+  margin: 0;
+}

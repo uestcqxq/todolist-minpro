@@ -1,0 +1,59 @@
+<!--pages/add/add.wxml-->
+<view class="container">
+  <!-- 期间选择 -->
+  <view class="section">
+    <view class="section-title">{{periodType === 'month' ? '选择月份' : '选择周期'}}</view>
+    <view class="form-group">
+      <view class="form-label">期间</view>
+      <view class="form-control">
+        <picker wx:if="{{periodType === 'month'}}"
+                mode="date" 
+                fields="month" 
+                value="{{period}}" 
+                bindchange="handlePeriodChange">
+          <view class="picker-text">
+            <text>{{period}}</text>
+            <text class="icon">▼</text>
+          </view>
+        </picker>
+        <picker wx:else
+                mode="date" 
+                fields="day" 
+                value="{{period}}" 
+                bindchange="handlePeriodChange">
+          <view class="picker-text">
+            <text>{{periodRange}}</text>
+            <text class="icon">▼</text>
+          </view>
+        </picker>
+      </view>
+    </view>
+  </view>
+
+  <!-- 工作项列表 -->
+  <view class="section">
+    <view class="section-title">工作内容</view>
+    <view class="work-items">
+      <view class="work-item" wx:for="{{items}}" wx:key="index">
+        <input class="work-input" 
+               value="{{item.content}}" 
+               placeholder="请输入工作内容" 
+               data-index="{{index}}"
+               bindinput="handleContentChange"
+        />
+        <view class="delete-btn" bindtap="removeItem" data-index="{{index}}">
+          <text class="icon-delete">×</text>
+        </view>
+      </view>
+    </view>
+    <button class="btn-add" bindtap="addItem">
+      <text class="icon-add">+</text>添加工作项
+    </button>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="footer">
+    <button class="btn btn-secondary" bindtap="navigateBack">取消</button>
+    <button class="btn" bindtap="handleSubmit">保存</button>
+  </view>
+</view>
